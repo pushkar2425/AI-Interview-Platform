@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Interview Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="container">
+            <header class="landing-header">
+                <h1>AI Voice Interview Assistant</h1>
+                <p>Practice your interview skills with our AI-powered voice interviewer</p>
+            </header>
+            
+            <div class="landing-content">
+                <div class="feature-cards">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>🎤 Voice Recognition</h3>
+                            <p>Real-time speech-to-text conversion for natural conversation</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>🤖 AI Analysis</h3>
+                            <p>Get detailed feedback on your interview performance</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>📊 Progress Tracking</h3>
+                            <p>Monitor your improvement over multiple sessions</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="auth-section">
+                    <button class="btn btn--primary btn--lg" id="start-interview-btn">Start Interview Practice</button>
+                    <p class="auth-note">No account required - jump right in!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Setup Page -->
+    <div id="setup-page" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h2>Interview Setup</h2>
+                <p>Configure your interview session</p>
+            </header>
+            
+            <div class="setup-content">
+                <div class="setup-form">
+                    <div class="form-group">
+                        <label class="form-label">Interview Type</label>
+                        <select class="form-control" id="interview-type">
+                            <option value="General">General Interview</option>
+                            <option value="Behavioral">Behavioral Interview</option>
+                            <option value="Technical">Technical Interview</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Number of Questions</label>
+                        <select class="form-control" id="question-count">
+                            <option value="3">3 Questions (Quick Practice)</option>
+                            <option value="5" selected>5 Questions (Standard)</option>
+                            <option value="8">8 Questions (Comprehensive)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Question Preview</label>
+                        <div class="question-preview" id="question-preview">
+                            <div class="question-item">
+                                <span class="question-number">1.</span>
+                                <span class="question-text">Tell me about yourself and your background.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="microphone-check">
+                        <h4>Microphone Check</h4>
+                        <p>We need access to your microphone for voice recording.</p>
+                        <button class="btn btn--outline" id="mic-test-btn">Test Microphone</button>
+                        <div class="mic-status" id="mic-status"></div>
+                    </div>
+                </div>
+                
+                <div class="setup-actions">
+                    <button class="btn btn--secondary" id="back-to-landing">Back</button>
+                    <button class="btn btn--primary btn--lg" id="begin-interview-btn" disabled>Begin Interview</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Conduct Page -->
+    <div id="interview-page" class="page">
+        <div class="container">
+            <div class="interview-header">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">Question 1 of 5</span>
+                </div>
+                <button class="btn btn--outline btn--sm" id="end-interview-btn">End Interview</button>
+            </div>
+            
+            <div class="interview-content">
+                <div class="ai-interviewer">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-question-bubble">
+                        <h3>AI Interviewer</h3>
+                        <p id="current-question">Loading question...</p>
+                    </div>
+                </div>
+                
+                <div class="voice-interface">
+                    <div class="audio-visualizer" id="audio-visualizer">
+                        <div class="wave-bars">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="recording-controls">
+                        <button class="btn btn--primary btn--lg record-btn" id="record-btn">
+                            <span class="record-icon">🎤</span>
+                            <span class="record-text">Click to Answer</span>
+                        </button>
+                        <p class="recording-status" id="recording-status">Click the microphone to start recording your answer</p>
+                    </div>
+                    
+                    <div class="transcript-container">
+                        <h4>Your Response:</h4>
+                        <div class="transcript" id="live-transcript">Your speech will appear here...</div>
+                    </div>
+                </div>
+                
+                <div class="interview-actions">
+                    <button class="btn btn--outline" id="skip-question-btn">Skip Question</button>
+                    <button class="btn btn--primary" id="next-question-btn" disabled>Next Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h2>Interview Complete!</h2>
+                <p>Here's your performance analysis</p>
+            </header>
+            
+            <div class="results-content">
+                <div class="score-overview">
+                    <div class="overall-score">
+                        <div class="score-circle">
+                            <span class="score-value" id="overall-score">85</span>
+                            <span class="score-label">Overall Score</span>
+                        </div>
+                    </div>
+                    
+                    <div class="score-breakdown">
+                        <div class="score-item">
+                            <span class="score-category">Communication Clarity</span>
+                            <div class="score-bar">
+                                <div class="score-bar-fill" style="width: 90%;" id="clarity-bar"></div>
+                            </div>
+                            <span class="score-points" id="clarity-score">90/100</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-category">Content Relevance</span>
+                            <div class="score-bar">
+                                <div class="score-bar-fill" style="width: 85%;" id="relevance-bar"></div>
+                            </div>
+                            <span class="score-points" id="relevance-score">85/100</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-category">Professional Tone</span>
+                            <div class="score-bar">
+                                <div class="score-bar-fill" style="width: 80%;" id="tone-bar"></div>
+                            </div>
+                            <span class="score-points" id="tone-score">80/100</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-feedback">
+                    <h3>AI Feedback & Analysis</h3>
+                    <div class="feedback-content" id="ai-feedback-content">
+                        <div class="feedback-section">
+                            <h4>Strengths</h4>
+                            <ul id="strengths-list">
+                                <li>Clear and confident speaking voice</li>
+                                <li>Well-structured responses with good examples</li>
+                                <li>Professional and appropriate tone throughout</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <h4>Areas for Improvement</h4>
+                            <ul id="improvements-list">
+                                <li>Consider providing more specific examples in behavioral questions</li>
+                                <li>Try to be more concise in your responses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interview-transcript">
+                    <h3>Full Interview Transcript</h3>
+                    <div class="transcript-content" id="full-transcript">
+                        <div class="transcript-item">
+                            <div class="transcript-question">
+                                <strong>AI:</strong> Tell me about yourself and your background.
+                            </div>
+                            <div class="transcript-answer">
+                                <strong>You:</strong> <span id="transcript-text">Transcript will be populated here...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button class="btn btn--outline" id="view-detailed-analysis">View Detailed Analysis</button>
+                    <button class="btn btn--secondary" id="start-new-interview">Start New Interview</button>
+                    <button class="btn btn--primary" id="save-results">Save Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for detailed analysis -->
+    <div class="modal hidden" id="analysis-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detailed Performance Analysis</h3>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="detailed-analysis-content">
+                <!-- Detailed analysis content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
